@@ -369,3 +369,161 @@ p {
 .technology-list .technology-card:nth-child(1) { --card-index: 1; }
 .technology-list .technology-card:nth-child(2) { --card-index: 2; }
 .technology-list .technology-card:nth-child(3) { --card-index: 3; }
+
+/* Эффект для карточек при наведении */
+.technology-list .technology-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Подсветка при наведении на подсказку */
+.click-hint:hover {
+  color: #667eea;
+}
+
+/* Адаптивность для QuickActions */
+@media (max-width: 768px) {
+  .actions-buttons {
+    flex-direction: column;
+  }
+  
+  .action-btn {
+    min-width: 100%;
+  }
+}
+
+/* Интеграция с остальным дизайном */
+.quick-actions + .App-main {
+  margin-top: 10px;
+}
+
+/* Анимация для оповещений */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.quick-actions {
+  animation: fadeIn 0.5s ease;
+}
+
+/* Добавьте эти стили в ваш App.css */
+
+/* Стили для вкладок фильтрации */
+.filter-tabs {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+  padding: 10px 0;
+  border-bottom: 2px solid #eee;
+  flex-wrap: wrap;
+}
+
+.filter-tab {
+  padding: 10px 20px;
+  border: none;
+  background: #f5f5f5;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+  position: relative;
+  bottom: -2px;
+}
+
+.filter-tab:hover {
+  background: #e0e0e0;
+  color: #333;
+  transform: translateY(-2px);
+}
+
+.filter-tab.active {
+  background: #007bff;
+  color: white;
+  border-bottom: 2px solid #007bff;
+}
+
+.tab-count {
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.filter-tab.active .tab-count {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Стили для текущего фильтра */
+.current-filter {
+  margin: 20px 0;
+  padding: 15px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 10px;
+  color: white;
+}
+
+.current-filter h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filter-count {
+  font-size: 1rem;
+  opacity: 0.9;
+  font-weight: normal;
+}
+
+/* Стили для сообщения "нет результатов" */
+.no-results-message {
+  text-align: center;
+  padding: 50px 20px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  border: 2px dashed #dee2e6;
+  margin: 30px 0;
+}
+
+.no-results-message p {
+  font-size: 1.2rem;
+  color: #6c757d;
+  margin: 10px 0;
+}
+
+.no-results-message .hint {
+  font-size: 1rem;
+  color: #868e96;
+  font-style: italic;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .filter-tabs {
+    justify-content: center;
+  }
+  
+  .filter-tab {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+  
+  .current-filter h3 {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+}

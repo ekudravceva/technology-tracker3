@@ -281,3 +281,65 @@
     font-size: 1.3em;
   }
 }
+
+/* Добавляем в конец TechnologyCard.css */
+
+/* Анимации для изменения статуса */
+.technology-card {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.technology-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Эффект нажатия */
+.technology-card:active {
+  transform: translateY(-1px);
+  transition: transform 0.1s ease;
+}
+
+/* Цвета статусов через границы */
+.technology-card.not-started {
+  border-left-color: #ff6b6b;
+  border-left-width: 6px;
+}
+
+.technology-card.in-progress {
+  border-left-color: #4ecdc4;
+  border-left-width: 6px;
+}
+
+.technology-card.completed {
+  border-left-color: #45b7d1;
+  border-left-width: 6px;
+}
+
+/* Подсказка для клика */
+.click-hint {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px dashed #ddd;
+  text-align: center;
+  color: #666;
+  font-size: 0.85em;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.technology-card:hover .click-hint {
+  opacity: 1;
+}
+
+/* Анимация изменения статуса */
+@keyframes statusChange {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+.technology-card.status-changing {
+  animation: statusChange 0.3s ease;
+}
