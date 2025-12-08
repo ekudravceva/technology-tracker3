@@ -1,24 +1,30 @@
 import './App.css';
 import TechnologyCard from './components/TechnologyCard.jsx';
 import ProgressHeader from './components/ProgressHeader.jsx';
-import { useState } from 'react';
 import QuickActions from './components/QuickActions';
+import useLocalStorage from './hooks/useLocalStorage';
+import { useState } from 'react';
 
 function App() {
-  const [technologies, setTechnologies] = useState([
+
+  const [technologies, setTechnologies] = useLocalStorage('techTrackerData', [
     {
       id: 1, title: 'React Components', description: 'Изучение базовых компонентов',
-      status: 'completed'
+      status: 'completed', notes: ''
     },
     {
-      id: 2, title: 'JSX Syntax', description: 'Освоение синтаксиса JSX', status: 'in-progress'
+      id: 2, title: 'JSX Syntax', description: 'Освоение синтаксиса JSX',
+      status: 'in-progress', notes: ''
     },
     {
-      id: 3, title: 'State Management', description: 'Работа с состоянием компонентов', status: 'not-started'
+      id: 3, title: 'State Management', description: 'Работа с состоянием компонентов',
+      status: 'not-started', notes: ''
     }
   ]);
 
   const [activeFilter, setActiveFilter] = useState('all');
+
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleStatusChange = (id, newStatus) => {
     setTechnologies(prevTechnologies =>
@@ -28,17 +34,41 @@ function App() {
     );
   };
 
+  const updateTechnologyNotes = (techId, newNotes) => {
+    setTechnologies(prevTech =>
+      prevTech.map(tech =>
+        tech.id === techId ? { ...tech, notes: newNotes } : tech
+      )
+    );
+  };
+
   const getFilteredTechnologies = () => {
+    let filtered = technologies;
+   
     switch(activeFilter) {
       case 'not-started':
-        return technologies.filter(tech => tech.status === 'not-started');
+        filtered = filtered.filter(tech => tech.status === 'not-started');
+        break;
       case 'in-progress':
-        return technologies.filter(tech => tech.status === 'in-progress');
+        filtered = filtered.filter(tech => tech.status === 'in-progress');
+        break;
       case 'completed':
-        return technologies.filter(tech => tech.status === 'completed');
+        filtered = filtered.filter(tech => tech.status === 'completed');
+        break;
       default:
-        return technologies; 
+        break;
     }
+
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(tech =>
+        tech.title.toLowerCase().includes(query) ||
+        tech.description.toLowerCase().includes(query) ||
+        (tech.notes && tech.notes.toLowerCase().includes(query))
+      );
+    }
+    
+    return filtered;
   };
 
   const filteredTechnologies = getFilteredTechnologies();
@@ -66,6 +96,33 @@ function App() {
       <main className="App-main">
         <h2>Дорожная карта изучения</h2>
 
+
+        {/* Поле поиска */}
+        <div className="search-section">
+          <div className="search-box">
+            <input
+              type="text"
+              placeholder="Поиск технологий по названию, описанию или заметкам"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="search-input"
+            />
+            <div className="search-stats">
+              <span className="found-count">Найдено: {filteredTechnologies.length}</span>
+              {searchQuery && (
+                <button 
+                  className="clear-search-btn"
+                  onClick={() => setSearchQuery('')}
+                  title="Очистить поиск"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Вкладки фильтрации */}
         <div className="filter-tabs">
           {tabs.map(tab => (
             <button
@@ -79,14 +136,22 @@ function App() {
           ))}
         </div>
 
+        {/* Отображение текущего активного фильтра */}
         <div className="current-filter">
           <h3>
             {activeFilter === 'all' && 'Все технологии'}
             {activeFilter === 'not-started' && 'Технологии не начаты'}
             {activeFilter === 'in-progress' && 'Технологии в процессе'}
             {activeFilter === 'completed' && 'Выполненные технологии'}
-            <span className="filter-count"> ({filteredTechnologies.length})</span>
+            <span className="filter-count">
+              {searchQuery ? ` (${filteredTechnologies.length} из ${technologies.length})` : ` (${filteredTechnologies.length})`}
+            </span>
           </h3>
+          {searchQuery && (
+            <p className="search-info">
+              Поиск: "<strong>{searchQuery}</strong>"
+            </p>
+          )}
         </div>
 
         <div className="technology-list">
@@ -98,17 +163,35 @@ function App() {
                 title={tech.title}
                 description={tech.description}
                 status={tech.status}
+                notes={tech.notes}
                 onStatusChange={handleStatusChange}
+                onNotesChange={updateTechnologyNotes}
               />
             ))
           ) : (
             <div className="no-results-message">
-              <p>Нет технологий с выбранным статусом</p>
-              <p className="hint">Попробуйте изменить статус существующих технологий или выбрать другую вкладку</p>
+              <div className="no-results-icon">🔍</div>
+              <h3>Нет технологий с выбранными параметрами</h3>
+              <p className="hint">
+                {searchQuery 
+                  ? `По запросу "${searchQuery}" ничего не найдено`
+                  : 'Попробуйте изменить фильтр или добавьте новые технологии'}
+              </p>
+              <div className="suggestions">
+                <button 
+                  className="action-btn"
+                  onClick={() => {
+                    setSearchQuery('');
+                    setActiveFilter('all');
+                  }}
+                > Показать все технологии
+                </button>
+              </div>
             </div>
           )}
         </div>
       </main>
+      
     </div>
   );
 }

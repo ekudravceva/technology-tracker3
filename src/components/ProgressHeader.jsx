@@ -1,3 +1,112 @@
+// // src/components/ProgressHeader.jsx
+// import './ProgressHeader.css';
+
+// function ProgressHeader({ technologies }) {
+//   // Рассчитываем статистику
+//   const total = technologies.length;
+//   const completed = technologies.filter(tech => tech.status === 'completed').length;
+//   const inProgress = technologies.filter(tech => tech.status === 'in-progress').length;
+//   const notStarted = technologies.filter(tech => tech.status === 'not-started').length;
+  
+//   // Процент выполнения (округляем до целого)
+//   const completionPercentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+  
+//   // Определяем цвет прогресс-бара в зависимости от процента
+//   const getProgressColor = () => {
+//     if (completionPercentage >= 80) return 'high';
+//     if (completionPercentage >= 40) return 'medium';
+//     return 'low';
+//   };
+
+//   // Определяем текстовое описание прогресса
+//   const getProgressDescription = () => {
+//     if (completionPercentage === 0) return 'Начните изучение!';
+//     if (completionPercentage < 30) return 'Есть над чем работать';
+//     if (completionPercentage < 60) return 'Хороший прогресс!';
+//     if (completionPercentage < 90) return 'Отличные результаты!';
+//     return 'Почти завершено!';
+//   };
+
+//   return (
+//     <div className="progress-header">
+//       <div className="stats-overview">
+//         <div className="stat-card">
+//           <div className="stat-icon">📚</div>
+//           <div className="stat-content">
+//             <div className="stat-value">{total}</div>
+//             <div className="stat-label">Всего технологий</div>
+//           </div>
+//         </div>
+        
+//         <div className="stat-card">
+//           <div className="stat-icon">✅</div>
+//           <div className="stat-content">
+//             <div className="stat-value">{completed}</div>
+//             <div className="stat-label">Изучено</div>
+//           </div>
+//         </div>
+        
+//         <div className="stat-card">
+//           <div className="stat-icon">⏳</div>
+//           <div className="stat-content">
+//             <div className="stat-value">{inProgress}</div>
+//             <div className="stat-label">В процессе</div>
+//           </div>
+//         </div>
+        
+//         <div className="stat-card">
+//           <div className="stat-icon">⭕</div>
+//           <div className="stat-content">
+//             <div className="stat-value">{notStarted}</div>
+//             <div className="stat-label">Не начато</div>
+//           </div>
+//         </div>
+//       </div>
+
+//       <div className="progress-section">
+//         <div className="progress-info">
+//           <div className="progress-title">
+//             <h3>Общий прогресс</h3>
+//             <span className="percentage">{completionPercentage}%</span>
+//           </div>
+//           <p className="progress-description">{getProgressDescription()}</p>
+//         </div>
+        
+//         <div className="progress-bar-container">
+//           <div 
+//             className={`progress-bar-main ${getProgressColor()}`}
+//             style={{ width: `${completionPercentage}%` }}
+//           >
+//             <div className="progress-fill"></div>
+//           </div>
+//           <div className="progress-labels">
+//             <span>0%</span>
+//             <span>50%</span>
+//             <span>100%</span>
+//           </div>
+//         </div>
+        
+//         <div className="progress-details">
+//           <div className="progress-item completed">
+//             <span className="dot"></span>
+//             <span>Изучено: {completed} из {total}</span>
+//           </div>
+//           <div className="progress-item in-progress">
+//             <span className="dot"></span>
+//             <span>В процессе: {inProgress}</span>
+//           </div>
+//           <div className="progress-item not-started">
+//             <span className="dot"></span>
+//             <span>Не начато: {notStarted}</span>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default ProgressHeader;
+
 // src/components/ProgressHeader.jsx
 import './ProgressHeader.css';
 
@@ -8,8 +117,17 @@ function ProgressHeader({ technologies }) {
   const inProgress = technologies.filter(tech => tech.status === 'in-progress').length;
   const notStarted = technologies.filter(tech => tech.status === 'not-started').length;
   
+  // Статистика по заметкам (из 21 практики)
+  const techWithNotes = technologies.filter(tech => tech.notes && tech.notes.trim().length > 0).length;
+  const totalNotesLength = technologies.reduce((sum, tech) => 
+    sum + (tech.notes ? tech.notes.length : 0), 0);
+  const avgNotesLength = techWithNotes > 0 ? Math.round(totalNotesLength / techWithNotes) : 0;
+  
   // Процент выполнения (округляем до целого)
   const completionPercentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+  
+  // Процент технологий с заметками
+  const notesPercentage = total > 0 ? Math.round((techWithNotes / total) * 100) : 0;
   
   // Определяем цвет прогресс-бара в зависимости от процента
   const getProgressColor = () => {
@@ -24,7 +142,13 @@ function ProgressHeader({ technologies }) {
     if (completionPercentage < 30) return 'Есть над чем работать';
     if (completionPercentage < 60) return 'Хороший прогресс!';
     if (completionPercentage < 90) return 'Отличные результаты!';
-    return 'Почти завершено!';
+    return 'Завершено!';
+  };
+
+  // Описание для статистики заметок
+  const getNotesDescription = () => {
+    if (techWithNotes === 0) return 'Добавьте заметки к технологиям';
+    return 'Отличная работа с заметками!';
   };
 
   return (
@@ -59,6 +183,18 @@ function ProgressHeader({ technologies }) {
           <div className="stat-content">
             <div className="stat-value">{notStarted}</div>
             <div className="stat-label">Не начато</div>
+          </div>
+        </div>
+        
+        {/* Новая статистика по заметкам из 21 практики */}
+        <div className="stat-card notes-stat">
+          <div className="stat-icon">📝</div>
+          <div className="stat-content">
+            <div className="stat-value">{techWithNotes}</div>
+            <div className="stat-label">С заметками</div>
+            <div className="stat-subtext">
+              {totalNotesLength} символов
+            </div>
           </div>
         </div>
       </div>
@@ -99,6 +235,40 @@ function ProgressHeader({ technologies }) {
             <span className="dot"></span>
             <span>Не начато: {notStarted}</span>
           </div>
+        </div>
+
+        {/* Новая секция статистики заметок из 21 практики */}
+        <div className="notes-stats-section">
+          <div className="notes-stats-header">
+            <h4>Статистика заметок</h4>
+            <span className="notes-percentage">{notesPercentage}%</span>
+          </div>
+          
+          <div className="notes-stats-grid">
+            <div className="notes-stat-item">
+              <div className="notes-stat-value">{techWithNotes}</div>
+              <div className="notes-stat-label">Технологий с заметками</div>
+            </div>
+            
+            <div className="notes-stat-item">
+              <div className="notes-stat-value">{totalNotesLength}</div>
+              <div className="notes-stat-label">Всего символов</div>
+            </div>
+            
+            <div className="notes-stat-item">
+              <div className="notes-stat-value">{avgNotesLength}</div>
+              <div className="notes-stat-label">Средняя длина</div>
+            </div>
+          </div>
+          
+          <div className="notes-progress-bar">
+            <div 
+              className="notes-progress-fill"
+              style={{ width: `${notesPercentage}%` }}
+            ></div>
+          </div>
+          
+          <p className="notes-description">{getNotesDescription()}</p>
         </div>
       </div>
     </div>

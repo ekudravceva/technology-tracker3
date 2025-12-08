@@ -343,3 +343,180 @@
 .technology-card.status-changing {
   animation: statusChange 0.3s ease;
 }
+
+/* Добавьте эти стили в TechnologyCard.css */
+
+.technology-card {
+  /* Существующие стили остаются */
+  position: relative;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.notes-button {
+  background: transparent;
+  border: 2px solid #e0e0e0;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notes-button:hover {
+  background: #f0f0f0;
+  transform: scale(1.1);
+}
+
+.notes-button.has-notes {
+  background: #e3f2fd;
+  border-color: #2196f3;
+  color: #1976d2;
+}
+
+.notes-button.expanded {
+  background: #1976d2;
+  color: white;
+  border-color: #1976d2;
+  transform: rotate(180deg);
+}
+
+/* Стили для блока заметок */
+.notes-section {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 15px;
+  margin-top: 15px;
+  border: 1px solid #e9ecef;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.notes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.notes-header h4 {
+  margin: 0;
+  color: #495057;
+  font-size: 1rem;
+}
+
+.notes-info {
+  font-size: 0.8rem;
+  color: #6c757d;
+  background: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  border: 1px solid #dee2e6;
+}
+
+.notes-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #dee2e6;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  resize: vertical;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  background: white;
+  min-height: 100px;
+}
+
+.notes-textarea:focus {
+  outline: none;
+  border-color: #4dabf7;
+  box-shadow: 0 0 0 3px rgba(77, 171, 247, 0.1);
+}
+
+.notes-hint {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: #868e96;
+}
+
+/* Стили для предварительного просмотра заметок */
+.notes-preview {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 6px;
+  padding: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.notes-preview:hover {
+  background: #ffeaa7;
+  transform: translateY(-2px);
+}
+
+.preview-icon {
+  font-size: 14px;
+}
+
+.preview-text {
+  color: #856404;
+  font-size: 0.9rem;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Дополнительная подсказка о заметках */
+.click-hint .notes-hint {
+  color: #17a2b8;
+  font-weight: 500;
+  margin-left: 5px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .header-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .notes-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .notes-info {
+    align-self: flex-start;
+  }
+}

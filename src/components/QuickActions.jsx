@@ -1,8 +1,20 @@
-// src/components/QuickActions.jsx
 import './QuickActions.css';
+import Modal from './Modal.jsx';
+import { useState } from 'react';
+
 
 function QuickActions({ technologies, setTechnologies }) {
-  // 1. Отметить все как выполненные
+  const [showExportModal, setShowExportModal] = useState(false);
+
+  const handleExport = () => {
+    const data = {
+      exportedAt: new Date().toISOString(),
+      technologies: technologies
+    };
+    console.log('Данные для экспорта:', JSON.stringify(data, null, 2));
+    setShowExportModal(true);
+  };
+
   const markAllAsCompleted = () => {
     setTechnologies(prev => 
       prev.map(tech => ({
@@ -12,7 +24,6 @@ function QuickActions({ technologies, setTechnologies }) {
     );
   };
 
-  // 2. Сбросить все статусы
   const resetAllStatuses = () => {
     setTechnologies(prev => 
       prev.map(tech => ({
@@ -22,23 +33,19 @@ function QuickActions({ technologies, setTechnologies }) {
     );
   };
 
-  // 3. Случайный выбор следующей технологии
   const selectRandomTechnology = () => {
-    // Фильтруем невыполненные технологии
     const notCompleted = technologies.filter(
       tech => tech.status !== 'completed'
     );
     
     if (notCompleted.length === 0) {
-      alert('🎉 Все технологии уже изучены!');
+      alert('Все технологии уже изучены!');
       return;
     }
 
-    // Выбираем случайную технологию
     const randomIndex = Math.floor(Math.random() * notCompleted.length);
     const randomTech = notCompleted[randomIndex];
-    
-    // Устанавливаем её статус "in-progress"
+
     setTechnologies(prev => 
       prev.map(tech => 
         tech.id === randomTech.id 
@@ -46,12 +53,10 @@ function QuickActions({ technologies, setTechnologies }) {
           : tech
       )
     );
-    
-    // Показываем сообщение
+   
     alert(`Следующая технология для изучения: "${randomTech.title}"`);
   };
 
-  // Подсчет статистики для информации
   const completedCount = technologies.filter(t => t.status === 'completed').length;
   const totalCount = technologies.length;
 
@@ -88,7 +93,21 @@ function QuickActions({ technologies, setTechnologies }) {
           Случайный выбор следующей технологии
         </button>
       </div>
-      
+
+      <button onClick={handleExport} className="action-btn">Экспорт данных
+      </button>
+
+      <Modal
+        isOpen={showExportModal}
+        onClose={() => setShowExportModal(false)}
+        title="Экспорт данных"
+      >
+        <p>Данные подготовлены для экспорта!</p>
+        <p>Проверьте консоль разработчика для просмотра данных.</p>
+        <button onClick={() => setShowExportModal(false)}>Закрыть</button>
+      </Modal>
+
+
     </div>
   );
 }

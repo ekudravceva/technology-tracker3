@@ -141,16 +141,21 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    rgba(255, 255, 255, 0.3) 50%, 
-    transparent 100%);
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.3) 50%,
+      transparent 100%);
   animation: shimmer 2s infinite;
 }
 
 @keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 .progress-labels {
@@ -224,42 +229,42 @@
   .progress-header {
     padding: 20px;
   }
-  
+
   .stats-overview {
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
   }
-  
+
   .stat-card {
     padding: 15px;
   }
-  
+
   .stat-icon {
     font-size: 2em;
     margin-right: 15px;
   }
-  
+
   .stat-value {
     font-size: 1.8em;
   }
-  
+
   .progress-section {
     padding: 20px;
   }
-  
+
   .progress-title h3 {
     font-size: 1.4em;
   }
-  
+
   .percentage {
     font-size: 1.6em;
   }
-  
+
   .progress-details {
     flex-direction: column;
     gap: 10px;
   }
-  
+
   .progress-item {
     min-width: 100%;
   }
@@ -269,8 +274,124 @@
   .stats-overview {
     grid-template-columns: 1fr;
   }
-  
+
   .progress-bar-main {
     height: 12px;
+  }
+}
+
+/* Стили для секции статистики заметок */
+.notes-stats-section {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 25px;
+  border: 1px solid #e9ecef;
+}
+
+.notes-stats-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.notes-stats-header h4 {
+  margin: 0;
+  color: #495057;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.notes-percentage {
+  background: #9c27b0;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.notes-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.notes-stat-item {
+  background: white;
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #dee2e6;
+  transition: transform 0.2s;
+}
+
+.notes-stat-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.notes-stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #9c27b0;
+  margin-bottom: 4px;
+}
+
+.notes-stat-label {
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+.notes-progress-bar {
+  height: 8px;
+  background: #e9ecef;
+  border-radius: 4px;
+  margin: 15px 0;
+  overflow: hidden;
+}
+
+.notes-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #e1bee7 0%, #9c27b0 100%);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.notes-description {
+  margin: 10px 0 0 0;
+  color: #6c757d;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .notes-stats-header {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .notes-percentage {
+    align-self: flex-start;
+  }
+
+  .notes-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .notes-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-subtext {
+    font-size: 0.7rem;
   }
 }
