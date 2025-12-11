@@ -2121,3 +2121,780 @@ input:checked + .slider:before {
 .back-link {
   animation: slideInLeft 0.5s ease-out;
 }
+
+
+/* Новый */
+/* ========== Стили для компонента поиска GitHub (ДЗ1) ========== */
+
+.github-search-global {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+.github-search-container {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e1e4e8;
+}
+
+.github-search-container h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #24292f;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.github-search-container h3::before {
+  content: "📌 ";
+  margin-right: 8px;
+}
+
+.search-input-container {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.github-search-input {
+  width: 100%;
+  padding: 14px 20px;
+  padding-right: 120px;
+  border: 2px solid #e1e4e8;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s;
+  font-family: inherit;
+}
+
+.github-search-input:focus {
+  outline: none;
+  border-color: #0366d6;
+  box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.1);
+}
+
+.github-search-input::placeholder {
+  color: #6a737d;
+}
+
+.search-loading {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #586069;
+  font-size: 14px;
+}
+
+.spinner-mini {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #e1e4e8;
+  border-top: 2px solid #0366d6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.search-error {
+  background-color: #ffebe9;
+  border: 1px solid #ffd1cc;
+  border-radius: 6px;
+  padding: 12px;
+  margin-top: 10px;
+  color: #cf222e;
+}
+
+.search-error p {
+  margin: 5px 0;
+}
+
+.search-hint {
+  font-size: 13px;
+  color: #6a737d;
+  margin-top: 8px !important;
+}
+
+.search-info {
+  font-size: 13px;
+  color: #6a737d;
+  text-align: center;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #eaecef;
+}
+
+/* Результаты поиска */
+.search-results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f6f8fa;
+  border-radius: 8px;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  border: 1px solid #d0d7de;
+}
+
+.search-results-header h3 {
+  margin: 0;
+  color: #24292f;
+  font-size: 18px;
+}
+
+.show-all-btn, .back-to-all-btn {
+  background: #2da44e;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.show-all-btn:hover, .back-to-all-btn:hover {
+  background: #2c974b;
+}
+
+/* Страница результатов поиска */
+.search-results-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.search-results-controls {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eaecef;
+}
+
+.search-results-controls h2 {
+  margin-top: 15px;
+  color: #24292f;
+  font-size: 20px;
+}
+
+.back-to-all-btn {
+  background: #6c757d;
+  margin-bottom: 10px;
+}
+
+.back-to-all-btn:hover {
+  background: #5a6268;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .github-search-global {
+    padding: 0 15px;
+  }
+  
+  .github-search-container {
+    padding: 15px;
+  }
+  
+  .search-results-header {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+  
+  .search-results-header h3 {
+    font-size: 16px;
+  }
+  
+  .github-search-input {
+    padding: 12px 15px;
+    padding-right: 100px;
+    font-size: 14px;
+  }
+}
+
+/* Анимация спиннера */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Стили для GitHub API интеграции */
+
+/* Переключатель API */
+.api-toggle {
+  margin-left: 20px;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.toggle-input {
+  display: none;
+}
+
+.toggle-slider {
+  position: relative;
+  width: 50px;
+  height: 24px;
+  background-color: #ccc;
+  border-radius: 24px;
+  margin-right: 10px;
+  transition: .4s;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  border-radius: 50%;
+  transition: .4s;
+}
+
+.toggle-input:checked + .toggle-slider {
+  background-color: #4CAF50;
+}
+
+.toggle-input:checked + .toggle-slider:before {
+  transform: translateX(26px);
+}
+
+.toggle-text {
+  font-size: 14px;
+  color: #555;
+}
+
+/* Бейдж для API технологий */
+.api-badge {
+  font-size: 11px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+/* Управление статусом */
+.status-controls {
+  display: flex;
+  gap: 10px;
+  margin: 12px 0;
+  align-items: center;
+}
+
+.status-select {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: white;
+  font-size: 14px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.add-to-local-btn {
+  padding: 6px 12px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.3s;
+  white-space: nowrap;
+}
+
+.add-to-local-btn:hover {
+  background: #388E3C;
+}
+
+/* Кнопка загрузки ресурсов */
+.fetch-resources-btn {
+  background: #2196F3;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-right: 10px;
+}
+
+.fetch-resources-btn:hover:not(:disabled) {
+  background: #1976D2;
+}
+
+.fetch-resources-btn:disabled {
+  background: #BDBDBD;
+  cursor: not-allowed;
+}
+
+/* Дополнительные ресурсы */
+.additional-resources-section {
+  margin-top: 15px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #2196F3;
+}
+
+.additional-resources-section h4 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #333;
+  font-size: 16px;
+}
+
+.resources-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.resources-list li {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed #e0e0e0;
+}
+
+.resources-list li:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.resource-link {
+  color: #2196F3;
+  text-decoration: none;
+  font-size: 13px;
+  word-break: break-all;
+}
+
+.resource-link:hover {
+  text-decoration: underline;
+}
+
+.tutorials-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.tutorial-link {
+  display: inline-block;
+  background: #e3f2fd;
+  color: #1976D2;
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 12px;
+  transition: background 0.3s;
+}
+
+.tutorial-link:hover {
+  background: #bbdefb;
+}
+
+/* GitHub ссылка */
+.github-link-section {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.github-link {
+  display: inline-block;
+  background: #333;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 13px;
+  transition: background 0.3s;
+}
+
+.github-link:hover {
+  background: #555;
+}
+
+/* Информация о звездах и языке */
+.stars-info, .language-info {
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 12px;
+  color: #666;
+  background: #f5f5f5;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+/* Заголовок с контролами */
+.header-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+/* Сообщение об ошибке API */
+.api-error-message {
+  background: #ffebee;
+  border: 1px solid #ffcdd2;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 20px;
+  color: #c62828;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* Индикатор загрузки */
+.loading-indicator {
+  text-align: center;
+  padding: 20px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.loading-indicator .spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 2s linear infinite;
+  margin: 0 auto 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Кнопки в пустом состоянии */
+.empty-state-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-secondary:hover {
+  background: #5a6268;
+}
+
+/* Стили для GitHub API интеграции */
+
+/* Компонент поиска */
+.technology-search {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e1e4e8;
+}
+
+.search-container {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 14px 20px;
+  border: 2px solid #e1e4e8;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #0366d6;
+  box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.3);
+}
+
+.search-loading-indicator {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #586069;
+}
+
+.loading-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #e1e4e8;
+  border-top: 2px solid #0366d6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.search-error {
+  background-color: #ffebe9;
+  border: 1px solid #ffd1cc;
+  border-radius: 6px;
+  padding: 12px;
+  margin-top: 10px;
+  color: #cf222e;
+}
+
+.search-hint {
+  font-size: 14px;
+  color: #586069;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Результаты поиска */
+.search-results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+  padding: 15px;
+  background: #f6f8fa;
+  border-radius: 8px;
+  border: 1px solid #d0d7de;
+}
+
+.show-all-btn {
+  background: #2da44e;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.show-all-btn:hover {
+  background: #2c974b;
+}
+
+/* Дополнительные ресурсы */
+.additional-resources-section {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px dashed #e1e4e8;
+}
+
+.fetch-resources-button {
+  background: #f6f8fa;
+  color: #24292f;
+  border: 1px solid #d0d7de;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.fetch-resources-button:hover:not(:disabled) {
+  background: #e1e4e8;
+}
+
+.fetch-resources-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.resources-details {
+  background: #f6f8fa;
+  border-radius: 6px;
+  padding: 15px;
+  margin-top: 10px;
+  border: 1px solid #d0d7de;
+}
+
+.resources-details h4 {
+  margin-top: 0;
+  color: #24292f;
+  font-size: 16px;
+}
+
+.resources-details ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 10px 0;
+}
+
+.resources-details li {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.resources-details a {
+  color: #0969da;
+  text-decoration: none;
+}
+
+.resources-details a:hover {
+  text-decoration: underline;
+}
+
+/* Roadmap Importer обновленный */
+.import-section {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 25px;
+  border: 1px solid #e1e4e8;
+}
+
+.custom-import {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.import-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #e1e4e8;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.import-button {
+  background: #2da44e;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.import-button:hover:not(:disabled) {
+  background: #2c974b;
+}
+
+.import-button:disabled {
+  background: #8fc997;
+  cursor: not-allowed;
+}
+
+.examples-section {
+  margin-bottom: 20px;
+}
+
+.example-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.example-button {
+  background: #f6f8fa;
+  color: #24292f;
+  border: 1px solid #d0d7de;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.example-button:hover:not(:disabled) {
+  background: #e1e4e8;
+}
+
+.import-note {
+  font-size: 13px;
+  color: #586069;
+  text-align: center;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #e1e4e8;
+}
+
+/* GitHub информация в карточках */
+.github-info {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: #586069;
+}
+
+.github-info span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Футер с информацией об API */
+.app-footer {
+  background: #f6f8fa;
+  border-top: 1px solid #d0d7de;
+  padding: 20px;
+  text-align: center;
+  color: #586069;
+  font-size: 14px;
+  margin-top: 40px;
+}
+
+.app-footer p {
+  margin: 5px 0;
+}
+
+/* Анимации */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Заголовок с количеством технологий */
+.header-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.tech-count {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+}
