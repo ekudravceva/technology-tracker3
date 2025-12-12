@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocalStorage';
 import '../App.css';
@@ -10,8 +10,42 @@ function AddTechnology() {
     title: '',
     description: '',
     status: 'not-started',
-    notes: ''
+    notes: '',
+    deadline: ''
   });
+
+  const [errors, setErrors] = useState({});
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Валидация названия
+    if (!formData.title.trim()) {
+      newErrors.title = 'Название технологии обязательно';
+    } else if (formData.title.trim().length < 2) {
+      newErrors.title = 'Название должно содержать минимум 2 символа';
+    }
+
+    // Валидация дедлайна (если заполнен)
+    if (formData.deadline) {
+      const deadlineDate = new Date(formData.deadline);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      if (deadlineDate < today) {
+        newErrors.deadline = 'Дедлайн не может быть в прошлом';
+      }
+    }
+
+    setErrors(newErrors);
+    setIsFormValid(Object.keys(newErrors).length === 0);
+  };
+
+  // Запускаем валидацию при каждом изменении
+  useEffect(() => {
+    validateForm();
+  }, [formData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,7 +57,16 @@ function AddTechnology() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
+    if (!isFormValid) {
+      // Показываем первую ошибку
+      const firstError = Object.keys(errors)[0];
+      if (firstError) {
+        document.getElementById(`${firstError}-error`)?.scrollIntoView({ behavior: 'smooth' });
+      }
+      return;
+    }
+
     if (!formData.title.trim()) {
       alert('Пожалуйста, введите название технологии');
       return;
@@ -40,7 +83,7 @@ function AddTechnology() {
 
     const updated = [...technologies, newTech];
     setTechnologies(updated);
-    
+
     alert('Технология успешно добавлена!');
     navigate('/technologies');
   };
@@ -49,7 +92,7 @@ function AddTechnology() {
     <div className="page">
       <div className="page-header">
         <h1>Добавить новую технологию</h1>
-        <button 
+        <button
           onClick={() => navigate('/technologies')}
           className="btn btn-secondary"
         >
@@ -69,9 +112,37 @@ function AddTechnology() {
               onChange={handleChange}
               placeholder="Например: React Hooks, Express.js, MongoDB"
               required
-              className="form-input"
+              className={`form-input ${errors.title ? 'error' : ''}`}
+              aria-required="true"
+              aria-invalid={!!errors.title}
+              aria-describedby={errors.title ? 'title-error' : undefined}
             />
             <div className="form-hint">Краткое и понятное название</div>
+            {errors.title && (
+              <span id="title-error" className="error-message" role="alert">
+                {errors.title}
+              </span>
+            )}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="deadline">Дедлайн изучения</label>
+            <input
+              type="date"
+              id="deadline"
+              name="deadline"
+              value={formData.deadline}
+              onChange={handleChange}
+              className={`form-input ${errors.deadline ? 'error' : ''}`}
+              aria-invalid={!!errors.deadline}
+              aria-describedby={errors.deadline ? 'deadline-error' : undefined}
+            />
+            {errors.deadline && (
+              <span id="deadline-error" className="error-message" role="alert">
+                {errors.deadline}
+              </span>
+            )}
+            <div className="form-hint">Необязательное поле</div>
           </div>
 
           <div className="form-group">
@@ -145,14 +216,14 @@ function AddTechnology() {
           </div>
 
           <div className="form-actions">
-            <button 
-              type="button" 
+            <button
+              type="button"
               onClick={() => navigate('/technologies')}
               className="btn btn-secondary"
             >
               Отмена
             </button>
-            <button 
+            <button
               type="submit"
               className="btn btn-primary"
             >
@@ -183,6 +254,15 @@ function AddTechnology() {
             )}
           </div>
         </div>
+      </div>
+      {/* Область для скринридера */}
+      <div
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        className="sr-only"
+      >
+        {Object.keys(errors).length > 0 && 'В форме есть ошибки'}
       </div>
     </div>
   );

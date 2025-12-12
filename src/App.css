@@ -2898,3 +2898,53 @@ input:checked + .slider:before {
   border-radius: 20px;
   font-size: 14px;
 }
+
+.error {
+  border-color: #dc3545 !important;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Фокус для доступности */
+*:focus {
+  outline: 2px solid #4dabf7;
+  outline-offset: 2px;
+}
+
+/* Улучшение для скринридеров */
+[role="listbox"] {
+  list-style: none;
+}
+
+[role="option"][aria-selected="true"] {
+  background-color: #e7f5ff;
+}
+
+/* Сообщения об ошибках для доступности */
+.error-message {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.error-message[role="alert"] {
+  font-weight: bold;
+}

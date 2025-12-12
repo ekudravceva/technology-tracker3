@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import Navigation from './components/Navigation';
 import Home from './pages/Home';
@@ -16,7 +16,6 @@ function App() {
   const [showSearchResults, setShowSearchResults] = useState(false);
 
   return (
-    <Router>
       <div className="App">
         <Navigation />
       
@@ -71,7 +70,6 @@ function App() {
           />
         </Routes>
       </div>
-    </Router>
   );
 }
 
