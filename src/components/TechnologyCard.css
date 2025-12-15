@@ -520,3 +520,126 @@
     align-self: flex-start;
   }
 }
+
+/* src/components/TechnologyCard.css */
+.technology-card {
+    /* ... существующие стили ... */
+    position: relative;
+}
+
+.card-title-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.card-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.delete-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px 8px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    color: #e74c3c;
+}
+
+.delete-btn:hover {
+    background: rgba(231, 76, 60, 0.1);
+    transform: scale(1.1);
+}
+
+.delete-confirmation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    animation: fadeIn 0.2s ease;
+    border: 2px solid #e74c3c;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.delete-confirmation p {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    font-size: 1.1rem;
+}
+
+.delete-confirm-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.confirm-delete-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.confirm-delete-btn:hover {
+    background: #c0392b;
+}
+
+.cancel-delete-btn {
+    background: #95a5a6;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.cancel-delete-btn:hover {
+    background: #7f8c8d;
+}
+
+/* Для темной темы */
+.dark-theme .delete-confirmation {
+    background: rgba(30, 30, 30, 0.95);
+    color: #ffffff;
+}
+
+.dark-theme .delete-confirmation p {
+    color: #ffffff;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .delete-confirm-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .confirm-delete-btn,
+    .cancel-delete-btn {
+        width: 100%;
+    }
+}

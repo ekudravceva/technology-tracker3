@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './TechnologyCard.css';
+import { useTech } from '../context/TechContext';
 
 function TechnologyCard({
   id,
@@ -14,6 +15,7 @@ function TechnologyCard({
   const [isNotesExpanded, setIsNotesExpanded] = useState(false);
   // Локальное состояние для заметок (для оптимизации рендеринга)
   const [localNotes, setLocalNotes] = useState(notes || '');
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   // Определяем порядок смены статусов
   const getNextStatus = (currentStatus) => {
@@ -102,6 +104,9 @@ function TechnologyCard({
     return localNotes.length > 60 ? `${preview}...` : preview;
   };
 
+    const techContext = useTech();
+    const { deleteTechnology } = techContext;
+
   return (
     <div
       className={`technology-card ${status}`}
@@ -125,6 +130,25 @@ function TechnologyCard({
               {getStatusIcon()} {getStatusText()}
             </span>
           </div>
+          {showDeleteConfirm && (
+                <div className="delete-confirmation">
+                    <p>Удалить технологию "<strong>{title}</strong>"?</p>
+                    <div className="delete-confirm-actions">
+                        <button 
+                            className="confirm-delete-btn"
+                            onClick={handleDelete}
+                        >
+                            Да, удалить
+                        </button>
+                        <button 
+                            className="cancel-delete-btn"
+                            onClick={toggleDeleteConfirm}
+                        >
+                            Отмена
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
       </div>
 

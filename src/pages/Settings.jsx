@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTech } from '../context/TechContext'; // Импортируем хук
 import useLocalStorage from '../hooks/useLocalStorage';
 import '../App.css';
 
 function Settings() {
     const navigate = useNavigate();
-    const [technologies, setTechnologies] = useLocalStorage('techTrackerData', []);
+    const { technologies, setTechnologies } = useTech(); // Используем контекст
     const [settings, setSettings] = useLocalStorage('appSettings', {
         theme: 'light',
         language: 'ru',
@@ -38,7 +39,7 @@ function Settings() {
 
     const clearAllData = () => {
         if (confirmDelete) {
-            setTechnologies([]);
+            setTechnologies([]); // Используем setTechnologies из контекста
             setConfirmDelete(false);
             alert('Все данные удалены!');
             navigate('/');

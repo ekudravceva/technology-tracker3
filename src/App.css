@@ -223,7 +223,7 @@ body {
 }
 
 .stat-label {
-  font-size: 1em;
+  font-size: 0.7em;
   color: #666;
   font-weight: 500;
   text-transform: uppercase;
@@ -1491,7 +1491,7 @@ p {
 }
 
 .stat-label-large {
-  font-size: 1.1em;
+  font-size: 0.8em;
   opacity: 0.9;
   font-weight: 500;
 }

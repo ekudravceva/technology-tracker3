@@ -1,12 +1,12 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import useLocalStorage from '../hooks/useLocalStorage';
+import { useTech } from '../context/TechContext';
 import '../App.css';
 
 function TechnologyDetail() {
   const { techId } = useParams();
   const navigate = useNavigate();
-  const [technologies, setTechnologies] = useLocalStorage('techTrackerData', []);
+  const { technologies, updateTechnologyStatus, updateTechnologyNotes, deleteTechnologyWithConfirm } = useTech();
   const [technology, setTechnology] = useState(null);
   const [localNotes, setLocalNotes] = useState('');
 
@@ -19,25 +19,19 @@ function TechnologyDetail() {
   }, [techId, technologies]);
 
   const updateStatus = (newStatus) => {
-    const updated = technologies.map(tech =>
-      tech.id === parseInt(techId) ? { ...tech, status: newStatus } : tech
-    );
-    setTechnologies(updated);
-    setTechnology({ ...technology, status: newStatus });
+    updateTechnologyStatus(parseInt(techId), newStatus);
   };
 
   const updateNotes = () => {
-    const updated = technologies.map(tech =>
-      tech.id === parseInt(techId) ? { ...tech, notes: localNotes } : tech
-    );
-    setTechnologies(updated);
+    updateTechnologyNotes(parseInt(techId), localNotes);
   };
 
-  const deleteTechnology = () => {
-    if (window.confirm('Вы уверены, что хотите удалить эту технологию?')) {
-      const updated = technologies.filter(tech => tech.id !== parseInt(techId));
-      setTechnologies(updated);
-      navigate('/technologies');
+  const deleteTechnology = async () => {
+    if (technology) {
+      const isDeleted = await deleteTechnologyWithConfirm(parseInt(techId), technology.title);
+      if (isDeleted) {
+        navigate('/technologies');
+      }
     }
   };
 

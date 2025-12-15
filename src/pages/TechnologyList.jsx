@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import useLocalStorage from '../hooks/useLocalStorage';
+import { useTech } from '../context/TechContext'; // Импортируем хук
 import BulkStatusEditor from '../components/BulkStatusEditor';
 import '../App.css';
 
 function TechnologyList() {
-    const [technologies, setTechnologies] = useLocalStorage('techTrackerData', []);
+    const { technologies, setTechnologies } = useTech(); // Используем контекст
     const [searchQuery, setSearchQuery] = useState('');
     const [activeFilter, setActiveFilter] = useState('all');
     const [loadingResources, setLoadingResources] = useState({});

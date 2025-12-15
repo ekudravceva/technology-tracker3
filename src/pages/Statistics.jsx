@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import useLocalStorage from '../hooks/useLocalStorage';
+import { useTech } from '../context/TechContext'; // Импортируем хук
 import { useSimpleNotification } from '../components/MuiNotification';
 import '../App.css';
 
 function Statistics() {
   const { show, MuiNotification } = useSimpleNotification();
-  const [technologies] = useLocalStorage('techTrackerData', []);
+  const { technologies } = useTech();
   const [chartType, setChartType] = useState('pie');
 
   // Рассчитываем статистику

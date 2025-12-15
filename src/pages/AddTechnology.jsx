@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useLocalStorage from '../hooks/useLocalStorage';
+import { useTech } from '../context/TechContext'; // Импортируем хук
 import '../App.css';
 
 function AddTechnology() {
   const navigate = useNavigate();
-  const [technologies, setTechnologies] = useLocalStorage('techTrackerData', []);
+  const { technologies, setTechnologies } = useTech(); // Используем контекст
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -59,7 +59,6 @@ function AddTechnology() {
     e.preventDefault();
 
     if (!isFormValid) {
-      // Показываем первую ошибку
       const firstError = Object.keys(errors)[0];
       if (firstError) {
         document.getElementById(`${firstError}-error`)?.scrollIntoView({ behavior: 'smooth' });
@@ -81,8 +80,7 @@ function AddTechnology() {
       createdAt: new Date().toISOString()
     };
 
-    const updated = [...technologies, newTech];
-    setTechnologies(updated);
+    setTechnologies([...technologies, newTech]); // Используем setTechnologies из контекста
 
     alert('Технология успешно добавлена!');
     navigate('/technologies');

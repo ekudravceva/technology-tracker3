@@ -1,59 +1,23 @@
 import TechnologyCard from '../components/TechnologyCard.jsx';
 import ProgressHeader from '../components/ProgressHeader.jsx';
 import QuickActions from '../components/QuickActions';
-import useLocalStorage from '../hooks/useLocalStorage';
+import AddTechnology from '../components/AddTechnology';
+import { useTech } from '../context/TechContext'; // Импорт хука
 import { useState } from 'react';
 import '../App.css';
 
 function Home() {
-    const [technologies, setTechnologies] = useLocalStorage('techTrackerData', [
-        {
-            id: 1,
-            title: 'React Components',
-            description: 'Изучение базовых компонентов',
-            status: 'completed',
-            notes: 'Освоил создание функциональных и классовых компонентов'
-        },
-        {
-            id: 2,
-            title: 'JSX Syntax',
-            description: 'Освоение синтаксиса JSX',
-            status: 'in-progress',
-            notes: 'Работаю с условным рендерингом и списками'
-        },
-        {
-            id: 3,
-            title: 'State Management',
-            description: 'Работа с состоянием компонентов',
-            status: 'not-started',
-            notes: 'Планирую изучить useState и useEffect'
-        },
-        {
-            id: 4,
-            title: 'React Router',
-            description: 'Навигация в React-приложениях',
-            status: 'in-progress',
-            notes: 'Изучаю маршрутизацию и динамические пути'
-        }
-    ]);
+    const { technologies, updateTechnologyStatus, updateTechnologyNotes } = useTech();
 
     const [activeFilter, setActiveFilter] = useState('all');
     const [searchQuery, setSearchQuery] = useState('');
 
     const handleStatusChange = (id, newStatus) => {
-        setTechnologies(prevTechnologies =>
-            prevTechnologies.map(tech =>
-                tech.id === id ? { ...tech, status: newStatus } : tech
-            )
-        );
+        updateTechnologyStatus(id, newStatus);
     };
 
-    const updateTechnologyNotes = (techId, newNotes) => {
-        setTechnologies(prevTech =>
-            prevTech.map(tech =>
-                tech.id === techId ? { ...tech, notes: newNotes } : tech
-            )
-        );
+    const handleNotesChange = (techId, newNotes) => {
+        updateTechnologyNotes(techId, newNotes);
     };
 
     const getFilteredTechnologies = () => {
@@ -104,8 +68,10 @@ function Home() {
             <ProgressHeader technologies={technologies} />
 
             <QuickActions
+            />
+
+            <AddTechnology
                 technologies={technologies}
-                setTechnologies={setTechnologies}
             />
 
             <main className="App-main">
@@ -179,7 +145,7 @@ function Home() {
                                 status={tech.status}
                                 notes={tech.notes}
                                 onStatusChange={handleStatusChange}
-                                onNotesChange={updateTechnologyNotes}
+                                onNotesChange={handleNotesChange}
                             />
                         ))
                     ) : (
