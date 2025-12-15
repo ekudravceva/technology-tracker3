@@ -68,6 +68,123 @@ body {
   margin: 0 auto;
 }
 
+/* НОВЫЕ 15.12 */
+/* App.css - в начале файла добавьте: */
+
+/* Используем CSS переменные из темы MUI */
+:root {
+  --mui-primary: #1976d2;
+  --mui-secondary: #dc004e;
+  --mui-background-default: #ffffff;
+  --mui-background-paper: #f5f5f5;
+  --mui-text-primary: rgba(0, 0, 0, 0.87);
+  --mui-text-secondary: rgba(0, 0, 0, 0.6);
+  --mui-divider: rgba(0, 0, 0, 0.12);
+}
+
+/* Темная тема */
+.dark-theme {
+  --mui-primary: #90caf9;
+  --mui-secondary: #f48fb1;
+  --mui-background-default: #121212;
+  --mui-background-paper: #1e1e1e;
+  --mui-text-primary: #ffffff;
+  --mui-text-secondary: rgba(255, 255, 255, 0.7);
+  --mui-divider: rgba(255, 255, 255, 0.12);
+}
+
+/* Применяем CSS переменные к вашим компонентам */
+body {
+  background-color: var(--mui-background-default);
+  color: var(--mui-text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.App {
+  background-color: var(--mui-background-default);
+  color: var(--mui-text-primary);
+  min-height: 100vh;
+}
+
+.page {
+  background-color: var(--mui-background-default);
+  color: var(--mui-text-primary);
+}
+
+.technology-card-list,
+.settings-section,
+.data-action,
+.danger-action,
+.preview-card,
+.form-preview {
+  background-color: var(--mui-background-paper);
+  border-color: var(--mui-divider);
+  color: var(--mui-text-primary);
+}
+
+/* Кнопки */
+.btn-primary {
+  background-color: var(--mui-primary);
+  color: white;
+}
+
+.btn-secondary {
+  background-color: var(--mui-background-paper);
+  color: var(--mui-text-primary);
+  border-color: var(--mui-divider);
+}
+
+.btn-danger {
+  background-color: #d32f2f;
+  color: white;
+}
+
+/* Формы */
+.form-input,
+.form-textarea,
+.search-input,
+.setting-select {
+  background-color: var(--mui-background-paper);
+  color: var(--mui-text-primary);
+  border-color: var(--mui-divider);
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.search-input:focus,
+.setting-select:focus {
+  border-color: var(--mui-primary);
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+/* Навигация */
+.navigation {
+  background-color: var(--mui-background-paper);
+  border-bottom: 1px solid var(--mui-divider);
+}
+
+.nav-link {
+  color: var(--mui-text-primary);
+}
+
+.nav-link:hover {
+  color: var(--mui-primary);
+}
+
+/* Статусные сообщения */
+.alert-success {
+  background-color: rgba(76, 175, 80, 0.1);
+  border-color: #4caf50;
+  color: #4caf50;
+}
+
+.alert-error {
+  background-color: rgba(244, 67, 54, 0.1);
+  border-color: #f44336;
+  color: #f44336;
+}
+/* КОНЕЦ НОВЫХ 15.12 */
+
 /* ===== СТАТИСТИКА ===== */
 .stats-summary {
   display: flex;

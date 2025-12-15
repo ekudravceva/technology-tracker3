@@ -313,40 +313,6 @@ function Settings() {
 
                     <div className="setting-item">
                         <div className="setting-info">
-                            <h4>Язык интерфейса</h4>
-                            <p>Выберите предпочитаемый язык</p>
-                        </div>
-                        <div className="setting-control">
-                            <select
-                                value={settings.language}
-                                onChange={(e) => handleSettingChange('language', e.target.value)}
-                                className="setting-select"
-                            >
-                                <option value="ru">Русский</option>
-                                <option value="en">English</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className="setting-item">
-                        <div className="setting-info">
-                            <h4>Уведомления</h4>
-                            <p>Получать напоминания о задачах</p>
-                        </div>
-                        <div className="setting-control">
-                            <label className="switch">
-                                <input
-                                    type="checkbox"
-                                    checked={settings.notifications}
-                                    onChange={(e) => handleSettingChange('notifications', e.target.checked)}
-                                />
-                                <span className="slider"></span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div className="setting-item">
-                        <div className="setting-info">
                             <h4>Автосохранение</h4>
                             <p>Автоматически сохранять изменения</p>
                         </div>

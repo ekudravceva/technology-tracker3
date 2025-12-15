@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { useSimpleNotification } from '../components/MuiNotification';
 import '../App.css';
 
 function Statistics() {
+  const { show, MuiNotification } = useSimpleNotification();
   const [technologies] = useLocalStorage('techTrackerData', []);
   const [chartType, setChartType] = useState('pie');
 
@@ -34,6 +36,7 @@ function Statistics() {
 
   return (
     <div className="page">
+      <MuiNotification />
       <div className="page-header">
         <h1>Статистика изучения</h1>
         <p>Анализ прогресса и эффективности обучения</p>
@@ -193,7 +196,7 @@ function Statistics() {
               technologies
             };
             console.log('Статистика:', JSON.stringify(data, null, 2));
-            alert('Статистика экспортирована в консоль разработчика');
+            show('Успешно! Проверьте консоль', 'success')
           }}
         >
           Экспортировать данные
